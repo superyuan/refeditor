@@ -21,19 +21,19 @@
 
 char inputReferenceGenomeFileName[MAX_FILE_NAME_LENGTH]="";
 char outputReferenceGenomeFileName[MAX_FILE_NAME_LENGTH]="";
-char dipMapFileName[MAX_FILE_NAME_LENGTH]="";
+char dipmapFileName[MAX_FILE_NAME_LENGTH]="";
 char genotypesFileName[MAX_FILE_NAME_LENGTH]="";
 int readLength = 0;
 int maxDeletion = 0;
 char gender='m';
-ofstream dipMapFile;
+ofstream dipmapFile;
 ofstream outputReferenceGenomeFile;
 int contexLength = 0;
 map<string, string> chrMap; // a map from chr name to sequence string
 vector<string> chrNameList; // use this list keep the order of chromosomes
 
 // return true if parameters are right.
-bool parseParameters (int argc, char *argv[])
+static bool parseParameters (int argc, char *argv[])
 {
 	int c;
 	while ((c = getopt (argc, argv, "r:g:o:l:d:s:")) != -1) {
@@ -46,8 +46,8 @@ bool parseParameters (int argc, char *argv[])
 				break;
 			case 'o':
 				strcpy(outputReferenceGenomeFileName, optarg);
-				strcpy(dipMapFileName, optarg);
-				strcat(dipMapFileName, ".dipmap");
+				strcpy(dipmapFileName, optarg);
+				strcat(dipmapFileName, ".dipmap");
 				break;
 			case 'l':
 				readLength=atoi(optarg);
@@ -119,10 +119,10 @@ static int extendFromDiploid(string chrNameDi)
 			miniCount = miniChrome.size();
 			// start from 1 because 0 is the reference allele
 			for (int j=1; j<miniCount; j++) {				
-				dipMapFile << chrNameHa << "\t" << chrMap[chrNameHa].length()+1 << "\t" << miniChrome[j].length() << "\t";
+				dipmapFile << chrNameHa << "\t" << chrMap[chrNameHa].length()+1 << "\t" << miniChrome[j].length() << "\t";
 				chrMap[chrNameHa] += miniChrome[j];
 				chrMap[chrNameHa] += stuffing;
-				dipMapFile << start+1 << endl;
+				dipmapFile << start+1 << endl;
 			}
 		}
 
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
 	} 
 	contexLength = 2*readLength - 1 + 2*maxDeletion;
 	outputReferenceGenomeFile.open(outputReferenceGenomeFileName);
-	dipMapFile.open(dipMapFileName);
+	dipmapFile.open(dipmapFileName);
 
 	// step 3: create mini chromosomes and append them to the end of reference allele.
 	for (int i=0; i<(int)chrNameList.size(); i++) {
@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
 			printHaploid(chrName);
 	}
 	outputReferenceGenomeFile << endl;
-	dipMapFile.close();
+	dipmapFile.close();
 	outputReferenceGenomeFile.close();
 	
 	return 0;
