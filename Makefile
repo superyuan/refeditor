@@ -3,8 +3,8 @@
 CC = gcc
 CXX = g++
 
-CFLAGS = -Wall -Werror -O2
-#CFLAGS = -g -Wall -Werror
+#CFLAGS = -Wall -Werror -O2
+CFLAGS = -g -Wall -Werror
 
 DB = imprinting
 USERNAME = mysql
@@ -83,7 +83,7 @@ fastakit: fastakit.cpp CLineFields1.cpp
 	$(CXX) $(CFLAGS) -o $@ $^
 compareSamTrue: compareSamTrue.cpp CLineFields1.cpp
 	$(CXX) $(CFLAGS) -o $@ $^
-DiploidConstructor: DiploidConstructor.cpp CLineFields.cpp
+DiploidConstructor: DiploidConstructor.cpp CLineFields1.cpp
 	$(CXX) $(CFLAGS) -o $@ $^
 generateReads: generateReads.cpp CLineFields.cpp
 	$(CXX) $(CFLAGS) -o $@ $^
