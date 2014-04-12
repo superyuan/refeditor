@@ -114,11 +114,13 @@ int mapExtendedChrome(GenomePosition &gp2)
 int main(int argc, char *argv[])
 {
 	if (parseParameters (argc, argv) == false) 	{
-		cerr << "Usage: " << argv[0] <<" -i input.sam -m dipmap -o output.sam" << endl;
+		cerr << "Version: 1.0-r7" << endl;
+		cerr << "Contact: shuaiyuan.emory@gmail.com" << endl << endl;	
+		cerr << "Usage: " << argv[0] <<" -i input.sam -m dipmap -o output.sam" << endl << endl;
 		cerr << "Convert the sam file created from being mapped to a diploid reference genome " << endl;
-		cerr << "  to being mapped to a haploid reference genome according to a dipmap file." << endl;
-		cerr << "Example: " << argv[0] << " -i input.sam -m hg19.di.fa.dipmap -o output.sam" << endl;
-		cerr << endl << "Parameters (mandatory): " << endl;
+		cerr << "  to being mapped to a haploid reference genome according to a dipmap file." << endl << endl;
+		cerr << "Example: " << argv[0] << " -i input.sam -m hg19.di.fa.dipmap -o output.sam" << endl << endl;
+		cerr << "Parameters (mandatory): " << endl;
 		cerr << "  -i\t\tinput SAM file " << endl;
 		cerr << "  -m\t\tdipmap file created by DiploidConstructor" << endl;
 		cerr << "  -o\t\toutput SAM file" << endl;
