@@ -3,8 +3,8 @@
 CC = gcc
 CXX = g++
 
-#CFLAGS = -Wall -Werror -O2
-CFLAGS = -g -Wall -Werror
+CFLAGS = -Wall -Werror -O2
+#CFLAGS = -g -Wall -Werror
 
 DB = imprinting
 USERNAME = mysql

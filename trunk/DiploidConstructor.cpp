@@ -139,8 +139,10 @@ int main(int argc, char *argv[])
 	CLineFields genotypesFile;
 
 	if (parseParameters (argc, argv) == false) 	{
-		cerr << "Usage: " << argv[0] <<" -r haploid.fa -g genotypes -l length -o diploid.fa" << endl;
-		cerr << "Convert haploid reference genome to diploid reference genome according to the genotypes and sequencing read length" << endl;
+		cerr << "Version: 1.0-r7" << endl;
+		cerr << "Contact: shuaiyuan.emory@gmail.com" << endl << endl;		
+		cerr << "Usage: " << argv[0] <<" -r haploid.fa -g genotypes -l length -o diploid.fa" << endl << endl;
+		cerr << "Convert haploid reference genome to diploid reference genome according to the genotypes and sequencing read length" << endl << endl;
 		cerr << "Example: " << argv[0] << " -r hg19.fa -g known.genotypes -l 36 -o diploid.fa" << endl;
 		cerr << endl << "Parameters (mandatory): " << endl;
 		cerr << "  -r\t\thaploid reference genome file " << endl;
