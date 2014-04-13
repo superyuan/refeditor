@@ -1,5 +1,3 @@
-#REFER = mm9.fa
-
 CC = gcc
 CXX = g++
 
@@ -23,4 +21,11 @@ clean:
 	find . -maxdepth 1 -type l -exec rm -rf {} \;
 	rm -rf *~ 
 	awk '{if( ($$1 != "all:") && ($$1 != "clean:") && (substr($$1,1,1)!="#") && (substr($$1,1,1)!="$$") && (substr($$1,length($$1),1)==":") ) { targetname=substr($$1,1, length($$1)-1); sub("%","*", targetname); cmd="rm -rf "targetname; system(cmd); }}' ${MAKEFILE_LIST} 
+
+tag:
+	rm -rf ../tags/refeditor.tar.gz refeditor/  && mkdir refeditor/
+	cp -rf DiploidConstructor.cpp MappingConvertor.cpp CLineFields1.cpp CLineFields1.h Makefile refeditor/
+	cp -rf hg19test.fa test.fastq test.genotypes refeditor/
+	tar -zcvf refeditor.tar.gz refeditor  &&  rm -rf refeditor/
+	rm -rf ../tags/refeditor.tar.gz  &&  mv refeditor.tar.gz ../tags/
 
