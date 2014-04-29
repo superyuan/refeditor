@@ -28,7 +28,7 @@ int maxDeletion = 0;
 char gender='m';
 ofstream dipmapFile;
 ofstream outputReferenceGenomeFile;
-int contexLength = 0;
+int contextLength = 0;
 map<string, string> chrMap; // a map from chr name to sequence string
 vector<string> chrNameList; // use this list keep the order of chromosomes
 
@@ -92,20 +92,26 @@ static int extendFromDiploid(string chrNameDi)
 	string chrNameHa = chrNameDi.substr(0, chrNameDi.length()-1);
 	string valueHa = chrMap[chrNameHa];
 	int miniCount = 0;
+	int gappedReadLength = readLength+maxDeletion;
 	for (int i=0, chrLength=valueDi.length(); i<chrLength; i++) {
 		
 		if (valueDi[i] != valueHa[i]) {
 			int start; // 0-based
 			vector<string> miniChrome;
-			start = i-readLength+1<0?0:i-readLength+1;
+			vector<int> readStart; // corresponds to the items in miniChrome, 1-based
+			start = max(i-gappedReadLength+1, 0);
 			// the first half we just use the string from reference allele and non-ref allele
 			miniChrome.push_back(valueHa.substr(start, i-start));
-			for (int j=i; j<i+readLength && j<chrLength; j++) {
+			readStart.push_back(start+1);
+			miniChrome[0] += valueDi[i]; // i is the first non-ref allele covered by reads.
+			for (int j=i+1; j<i+gappedReadLength&& j<chrLength; j++) {
 				miniCount = miniChrome.size();
 				if (valueDi[j] != valueHa[j]) {
 					// another difference between ha and di doubles the possible combinations.
 					for (int k=0; k<miniCount; k++) {
-						miniChrome.push_back(miniChrome[k]);
+						int new_start=max((int)(miniChrome[k].length())-gappedReadLength+1, 0);						
+						miniChrome.push_back(miniChrome[k].substr(new_start)); // the read covers the new met SNP, right shifting start position.
+						readStart.push_back(readStart[k]+new_start);
 						miniChrome[k] = miniChrome[k] + valueHa[j]; // append the base from ref allele
 						miniChrome[k+miniCount] = miniChrome[k+miniCount] + valueDi[j];  // append the base from non-ref allele
 					}
@@ -117,12 +123,12 @@ static int extendFromDiploid(string chrNameDi)
 				}
 			}
 			miniCount = miniChrome.size();
-			// start from 1 because 0 is the reference allele
-			for (int j=1; j<miniCount; j++) {				
+			// start from 0 because it covers the first non-ref allele
+			for (int j=0; j<miniCount; j++) {				
 				dipmapFile << chrNameHa << "\t" << chrMap[chrNameHa].length()+1 << "\t" << miniChrome[j].length() << "\t";
 				chrMap[chrNameHa] += miniChrome[j];
 				chrMap[chrNameHa] += stuffing;
-				dipmapFile << start+1 << endl;
+				dipmapFile << readStart[j] << endl;
 			}
 		}
 
@@ -190,7 +196,7 @@ int main(int argc, char *argv[])
 	}	
 	inputReferenceGenomeFile.closeFile();
 
-	// step 2: use genotype file to modify the chromosomes
+	// step 2: use genotype file to modify the chromosomes. double the chromosome numbers.
 	if (genotypesFile.isOpen()) {
 		int refColumn = -1, altColumn=-1;
 		genotypesFile.readline();
@@ -226,7 +232,7 @@ int main(int argc, char *argv[])
 		}
 		genotypesFile.closeFile();
 	} 
-	contexLength = 2*readLength - 1 + 2*maxDeletion;
+	contextLength = 2*readLength - 1 + 2*maxDeletion;
 	outputReferenceGenomeFile.open(outputReferenceGenomeFileName);
 	dipmapFile.open(dipmapFileName);
 
