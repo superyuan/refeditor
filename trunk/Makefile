@@ -25,7 +25,7 @@ clean:
 tag:
 	rm -rf ../tags/refeditor.tar.gz refeditor/  && mkdir refeditor/
 	cp -rf DiploidConstructor.cpp MappingConvertor.cpp CLineFields1.cpp CLineFields1.h Makefile refeditor/
-	cp -rf hg19test.fa test.fastq test.genotypes refeditor/
+	cp -rf hg19test.fa test.fastq test.genotypes test.vcf vcf2genotypes refeditor/
 	tar -zcvf refeditor.tar.gz refeditor  &&  rm -rf refeditor/
 	rm -rf ../tags/refeditor.tar.gz  &&  mv refeditor.tar.gz ../tags/
 
