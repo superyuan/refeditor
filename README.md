@@ -56,7 +56,8 @@ MappingConvertor should be executed after calling read mapping tools.
 Build & Install
 ==============
 
-    tar -zxvf refeditor-v1.1_r13.tar.gz
+   Download and uncompress this software, and then:
+   
     cd refeditor
     make
 
@@ -83,7 +84,7 @@ Parameters (mandatory):
 
     -g    genotypes file
 
-    -l     read length
+    -l    read length
 
     -o    output diploid reference genome file 
 
@@ -107,7 +108,7 @@ Example:
 
 Parameters (mandatory): 
 
-    -i      input SAM file 
+    -i    input SAM file 
 
     -m    dipmap file created by DiploidConstructor
 
