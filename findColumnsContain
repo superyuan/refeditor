@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+if [ "$1" == "" -o "$2" == "" ]
+then
+        echo "find the columns (1-based) containing the string "
+        echo "syntax: "
+        echo "  " $0 "  " string " " file 
+        exit -1
+fi
+
+awk -v pattern=$1 '{ tab=""; for (i=1; i<=NF; i++) {if (index($i,pattern)>0) {printf("%s%s\t%d",tab,$i,i); tab="\t"}} printf("\n");}' $2
+
