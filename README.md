@@ -58,7 +58,7 @@ Build & Install
 
    Download and uncompress this software, and then:
    
-    cd refeditor
+    cd refeditor-master
     make
 
 then you can copy compiled executables to anywhere in your PATH variable ( e.g  ~/bin/ ).
@@ -123,7 +123,7 @@ Read mapping using RefEditor
 
 1. Compile 
 
-        cd refeditor
+        cd refeditor-master
         make
 
 2. Create genotypes file for target individual
