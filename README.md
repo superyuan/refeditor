@@ -1,17 +1,25 @@
 Citation
 ==============
 
-If you use this software, please cite this paper:
+If you use this software, please cite these papers:
+
+Yuan S, Johnston HR, Zhang G, Li Y, Hu Y-J, Qin ZS (2015) *One Size Doesn't Fit All - RefEditor: Building Personalized Diploid Reference Genome to Improve Read Mapping and Genotype Calling in Next Generation Sequencing Studies.* PLoS Comput Biol 11(8): e1004448. doi:10.1371/journal.pcbi.1004448
+
+Download citation (Right click -> Save as...): 
+* [refEditor.ris](https://github.com/superyuan/refeditor/blob/master/refEditor.ris) (compatible with EndNote, Reference Manager, ProCite, RefWorks)
+* [refEditor.bib](https://github.com/superyuan/refeditor/blob/master/refEditor.bib) (compatible with BibDesk, LaTeX)
+
+
 
 Shuai Y, Zhaohui Q: *Read-mapping using personalized diploid reference genome for RNA sequencing data reduced bias for detecting allele-specific expression.* In _Bioinformatics and Biomedicine Workshops (BIBMW), 2012 IEEE International Conference on; 4-7 Oct. 2012._ 2012: 718-724.
 
-You can download citation here (Right click -> Save as...):
+Download citation (Right click -> Save as...):
 * [diploid_mapping.ris](https://github.com/superyuan/refeditor/blob/master/diploid_mapping.ris) (compatible with EndNote, Reference Manager, ProCite, RefWorks)
 * [diploid_mapping.bibtex](https://github.com/superyuan/refeditor/blob/master/diploid_mapping.bibtex) (compatible with BibDesk, LaTeX)
 
 Contacts
 ==============
-Shuai Yuan,  Email: [shuaiyuan@emory.edu]
+Shuai Yuan,  Email: [shuaiyuan.emory@gmail.com]
 
 ----
 
@@ -20,7 +28,7 @@ Downloads
 ==============
 Latest Version
 --------------
-Please use right panel to download source code.
+Please use the panel on the right to download source code.
 
 Old Versions
 --------------
