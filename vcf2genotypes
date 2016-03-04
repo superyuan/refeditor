@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-if [ "$1" == "" ]
+if [ "$2" == "" ]
 then
 	echo "Create genotypes file given an individual"
 	echo "syntax: " 
@@ -16,19 +16,14 @@ then
 	QUAL="$3"
 fi 
 
-if [[ "$2" -ge 1 ]]
-then
-    TARGET_COLUMN="$2"
-else
-    TARGET_COLUMN=$(./get.header $1 | tail -n 1 | ./findColumnsContain "$2" /dev/stdin | awk '{print $2}')
-fi
+TARGET_COLUMN=$(./get.header $1 | tail -n 1 | ./findColumnsContain "$2" /dev/stdin | awk '{print $2}')
 
 if [ "$TARGET_COLUMN" == "" ]
 then
 	echo "Error! Cannot find individual: " "$2"
 	exit -1
 else
-	./remove.header "$1" | awk -v qual=$QUAL -v c="$TARGET_COLUMN" '{ if(int($6) >=int(qual)) { GT_column=0; if(length($1)>3) chrPrefix=""; else chrPrefix="chr"; AL["0"]=$4;AL["1"]=$5; n=split($9,format,":"); for (i=1;i<=n;i++) { if(format[i]=="GT") { GT_column=i; break; }} if(GT_column>=1) { split($c,content,":"); GT=content[GT_column];AL0num=substr(GT,1,1); AL1num=substr(GT,3,1); if ((AL0num=="0" || AL0num=="1")&&(AL1num=="0" || AL1num=="1")) { printf("%s\t%s%s\t%s\t%s\t%s\t%s\t%s\n",$3,chrPrefix,$1,$2,AL["0"],AL["1"],AL0num,AL1num); } else {}} else { printf("%s\t%s%s\t%s\t%s\t%s\t%s\t%s\n",$3,chrPrefix,$1,$2,AL["0"],AL["1"],"0","0"); }   } }' | awk '{if (length($4)==length($5)) {j=1; for (i=1; i<=length($4); i++) {if (substr($4,i,1)!=substr($5,i,1)) {j=i;break;}} printf("%s\t%s\t%s\t%s\t%s\n", $1,$2,$3+j-1,substr($(4+$6),j,1),substr($(4+$7),j,1));}}'
+	./remove.header "$1" | awk -v qual=$QUAL -v c="$TARGET_COLUMN" '{ if(int($6) >=int(qual)) { GT_column=0; if(length($1)>3) chrPrefix=""; else chrPrefix="chr"; AL["0"]=$4;AL["1"]=$5; n=split($9,format,":"); for (i=1;i<=n;i++) { if(format[i]=="GT") { GT_column=i; break; }} if(GT_column>=1) { split($c,content,":"); GT=content[GT_column];AL0num=substr(GT,1,1); AL1num=substr(GT,3,1); if ((AL0num=="0" || AL0num=="1")&&(AL1num=="0" || AL1num=="1")) { printf("%s\t%s%s\t%s\t%s\t%s\t%s\t%s\n",$3,chrPrefix,$1,$2,AL["0"],AL["1"],AL0num,AL1num); } else {}} else { printf("%s\t%s%s\t%s\t%s\t%s\t%s\t%s\n",$3,chrPrefix,$1,$2,AL["0"],AL["1"],"0","0"); }   } }' | awk '{if (length($4)==length($5)) {j=1; for (i=1; i<=length($4); i++) {if (substr($4,i,1)!=substr($5,i,1)) {j=i;break;}} printf("%s\t%s\t%s\t%s\t%s\n", $1,$2,$3+j-1,substr($(4+$6),j,1),substr($(4+$7),j,1));} else {printf("%s\t%s\t%s\t%s\t%s\n",$1,$2,$3,$4,$5);}}'
 
 fi
 

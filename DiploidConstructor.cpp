@@ -201,31 +201,35 @@ int main(int argc, char *argv[])
 		int refColumn = -1, altColumn=-1;
 		genotypesFile.readline();
 		while(genotypesFile.endofFile()==false) {
-			unsigned int pos = atoi(genotypesFile.field[2].c_str());
-			chrName = genotypesFile.field[1];
-			chrNameB = chrName+"b";
-			
-			if (chrMap[chrName].length()<pos) {
-				cerr << "Warning!!! genotype is out of range at: " << chrName << ": " << genotypesFile.field[2] << endl;
-			} else {
-				// decide which is ref and which is non-ref
-				if (toupper(chrMap[chrName][pos-1]) == toupper(genotypesFile.field[4][0])) {						
-					refColumn = 4;
-					altColumn = 3;
-				}
-				else {
-					refColumn = 3;
-					altColumn = 4;
-				}
 
-				// if genotype is alt/alt, then we still need to change reference allele.
-				if (chrMap[chrName][pos-1] >='A' && chrMap[chrName][pos-1] <='Z') {
-					chrMap[chrName][pos-1] = toupper(genotypesFile.field[refColumn][0]);
-					chrMap[chrNameB][pos-1] = toupper(genotypesFile.field[altColumn][0]);
-				}
-				else {
-					chrMap[chrName][pos-1] = tolower(genotypesFile.field[refColumn][0]);
-					chrMap[chrNameB][pos-1] = tolower(genotypesFile.field[altColumn][0]);
+			if ((genotypesFile.field.size()>=5) && (genotypesFile.field[3].length()==1) && (genotypesFile.field[4].length()==1))
+			{
+				unsigned int pos = atoi(genotypesFile.field[2].c_str());
+				chrName = genotypesFile.field[1];
+				chrNameB = chrName+"b";
+			
+				if (chrMap[chrName].length()<pos) {
+					cerr << "Warning!!! genotype is out of range at: " << chrName << ": " << genotypesFile.field[2] << endl;
+				} else {
+					// decide which is ref and which is non-ref
+					if (toupper(chrMap[chrName][pos-1]) == toupper(genotypesFile.field[4][0])) {
+						refColumn = 4;
+						altColumn = 3;
+					}
+					else {
+						refColumn = 3;
+						altColumn = 4;
+					}
+
+					// if genotype is alt/alt, then we still need to change reference allele.
+					if (chrMap[chrName][pos-1] >='A' && chrMap[chrName][pos-1] <='Z') {
+						chrMap[chrName][pos-1] = toupper(genotypesFile.field[refColumn][0]);
+						chrMap[chrNameB][pos-1] = toupper(genotypesFile.field[altColumn][0]);
+					}
+					else {
+						chrMap[chrName][pos-1] = tolower(genotypesFile.field[refColumn][0]);
+						chrMap[chrNameB][pos-1] = tolower(genotypesFile.field[altColumn][0]);
+					}
 				}
 			}
 			genotypesFile.readline();
