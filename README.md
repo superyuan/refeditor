@@ -190,6 +190,10 @@ Using RefEditor for read mapping can improve mapping accuracy and downstream ana
 
 Revisions
 ==============
+v1.4_r24
+--------------
+  Minor bugs fixing
+
 v1.3_r17
 --------------
   Add test.vcf and vcf2genotypes 
